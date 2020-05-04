@@ -6,6 +6,5 @@ import (
 )
 
 func main() {
-	fmt.Println("project_start")
-	mvduplicate.ListFile()
+	fmt.Println(mvduplicate.ReadConfiguration("./config.json").Directory)
 }
