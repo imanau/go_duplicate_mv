@@ -6,7 +6,8 @@ ENV HOME /root
 ENV PATH $PATH:/usr/local/go/bin
 ENV LANG C.UTF-8
 ENV LANGUAGE en_US:
-ENV GOPATH $HOME
+ENV GOPATH $HOME/work
+ENV CGO_ENABLED 0
 RUN apt-get update -y \
     && apt-get install vim curl git tmux tree  -y \
     && apt-get install wget \
