@@ -9,7 +9,7 @@ import (
 
 // ReadConfigurationのテスト
 func TestReadConfiguration(t *testing.T) {
-	dir := ReadConfiguration("../config.json").Directory
+	dir := ReadConfiguration("../config.json").SearchDir
 	assert.Equal(t, "./sample", dir)
 }
 

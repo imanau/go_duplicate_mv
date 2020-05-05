@@ -9,7 +9,8 @@ import (
 
 // Configuration 設定ファイル読み込み用のstruct
 type Configuration struct {
-	Directory string `json:"directory"`
+	SearchDir string `json:"search_dir"`
+	MoveDir   string `json:"move_dir"`
 }
 
 // ReadConfiguration configファイルを読み込む
@@ -20,7 +21,8 @@ func ReadConfiguration(configPath string) *Configuration {
 	}
 	var config Configuration
 	json.Unmarshal(raw, &config)
-	config.Directory = filepath.FromSlash(config.Directory)
+	config.SearchDir = filepath.FromSlash(config.SearchDir)
+	config.MoveDir = filepath.FromSlash(config.MoveDir)
 	return &config
 }
 

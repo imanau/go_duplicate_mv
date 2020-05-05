@@ -2,10 +2,12 @@ package main
 
 import (
 	"duplicate_delete/mvduplicate"
-	"fmt"
 )
 
 func main() {
-	searchPath := mvduplicate.ReadConfiguration("./config.json").Directory
-	fmt.Println(mvduplicate.GetFilepaths(searchPath))
+	config := mvduplicate.ReadConfiguration("./config.json")
+	searchPath := config.SearchDir
+	moveDir := config.MoveDir
+	filepaths := mvduplicate.GetFilepaths(searchPath)
+	mvduplicate.MvFiles(filepaths, moveDir)
 }
