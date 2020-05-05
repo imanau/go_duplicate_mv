@@ -6,5 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println(mvduplicate.ReadConfiguration("./config.json").Directory)
+	searchPath := mvduplicate.ReadConfiguration("./config.json").Directory
+	fmt.Println(mvduplicate.GetFilepaths(searchPath))
 }
