@@ -3,12 +3,14 @@ package mvduplicate
 import (
 	"encoding/json"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 )
 
 // Configuration 設定ファイル読み込み用のstruct
 type Configuration struct {
-	Directory string `json:"directory"`
+	SearchDir string `json:"search_dir"`
+	MoveDir   string `json:"move_dir"`
 }
 
 // ReadConfiguration configファイルを読み込む
@@ -19,7 +21,8 @@ func ReadConfiguration(configPath string) *Configuration {
 	}
 	var config Configuration
 	json.Unmarshal(raw, &config)
-	config.Directory = filepath.FromSlash(config.Directory)
+	config.SearchDir = filepath.FromSlash(config.SearchDir)
+	config.MoveDir = filepath.FromSlash(config.MoveDir)
 	return &config
 }
 
@@ -38,4 +41,14 @@ func GetFilepaths(searchPath string) []string {
 		paths = append(paths, filepath.Join(searchPath, file.Name()))
 	}
 	return paths
+}
+
+// MvFiles 第１引数で指定するファイルパスの一覧を第２引数に指定するディレクトリに移す
+func MvFiles(filePaths []string, moveDir string) {
+	for _, file := range filePaths {
+		filename := filepath.Base(file)
+		if err := os.Rename(file, filepath.Join(moveDir, filename)); err != nil {
+			panic(err)
+		}
+	}
 }
