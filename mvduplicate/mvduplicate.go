@@ -2,7 +2,6 @@ package mvduplicate
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"path/filepath"
 )
@@ -16,11 +15,27 @@ type Configuration struct {
 func ReadConfiguration(configPath string) *Configuration {
 	raw, err := ioutil.ReadFile(configPath)
 	if err != nil {
-		fmt.Println(err.Error())
-
+		panic(err)
 	}
 	var config Configuration
 	json.Unmarshal(raw, &config)
 	config.Directory = filepath.FromSlash(config.Directory)
 	return &config
+}
+
+// GetFilepaths 指定するディレクトリ以下のファイル一覧をスライスで返却（サブフォルダも再帰検索）
+func GetFilepaths(searchPath string) []string {
+	files, err := ioutil.ReadDir(searchPath)
+	if err != nil {
+		panic(err)
+	}
+	var paths []string
+	for _, file := range files {
+		if file.IsDir() {
+			paths = append(paths, GetFilepaths(filepath.Join(searchPath, file.Name()))...)
+			continue
+		}
+		paths = append(paths, filepath.Join(searchPath, file.Name()))
+	}
+	return paths
 }
