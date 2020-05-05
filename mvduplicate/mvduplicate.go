@@ -3,6 +3,7 @@ package mvduplicate
 import (
 	"encoding/json"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 )
 
@@ -38,4 +39,14 @@ func GetFilepaths(searchPath string) []string {
 		paths = append(paths, filepath.Join(searchPath, file.Name()))
 	}
 	return paths
+}
+
+// MvFiles 第１引数で指定するファイルパスの一覧を第２引数に指定するディレクトリに移す
+func MvFiles(filePaths []string, moveDir string) {
+	for _, file := range filePaths {
+		filename := filepath.Base(file)
+		if err := os.Rename(file, filepath.Join(moveDir, filename)); err != nil {
+			panic(err)
+		}
+	}
 }

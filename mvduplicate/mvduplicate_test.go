@@ -22,10 +22,9 @@ func TestGetFilepaths(t *testing.T) {
 }
 
 // MvFilesのテスト
-
 func TestMvFiles(t *testing.T) {
 	var filepaths []string
-	moveDir := "../moved"
+	moveDir := "../test"
 	filepaths = append(filepaths, "../sample/test1/test1.txt")
 	MvFiles(filepaths, moveDir)
 	assert.FileExists(t, filepath.Join(moveDir, "test1.txt"))
