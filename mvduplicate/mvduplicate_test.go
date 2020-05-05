@@ -1,6 +1,7 @@
 package mvduplicate
 
 import (
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,4 +19,14 @@ func TestGetFilepaths(t *testing.T) {
 	for _, file := range filepaths {
 		assert.FileExists(t, file, "")
 	}
+}
+
+// MvFilesのテスト
+
+func TestMvFiles(t *testing.T) {
+	var filepaths []string
+	moveDir := "../moved"
+	filepaths = append(filepaths, "../sample/test1/test1.txt")
+	MvFiles(filepaths, moveDir)
+	assert.FileExists(t, filepath.Join(moveDir, "test1.txt"))
 }
